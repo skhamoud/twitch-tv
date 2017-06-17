@@ -1,18 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Streamers from "./components/Streamers";
+import { fetchData } from "./api";
+
+import "bulma/css/bulma.css";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      streamsData: [],
+      loading: false
+    };
+  }
+  componentDidMount() {
+    this.setState({ loading: true });
+    fetchData().then(res => {
+      Promise.all([...res]).then(res => {
+        this.setState({ streamsData: res });
+      });
+    });
+
+    // TODO: Abstract Api calls with Promise.all ?
+    // setting state every time is dumb
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Streamers streamers={this.state.streamsData} />
       </div>
     );
   }
