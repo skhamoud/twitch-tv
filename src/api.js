@@ -7,9 +7,13 @@ var streamers = [
   "freecodecamp",
   "ESL_SC2",
   "habathcx",
+  "storbeck",
+  "RobotCaleb",
   "noobs2ninjas",
   "OgamingSC2",
-  "tommey"
+  "brunofin",
+  "tommey",
+  "comster404"
 ];
 var endpoint = "https://api.twitch.tv/kraken";
 
@@ -22,8 +26,20 @@ export function fetchData() {
     const streamers = res.data.users;
     return streamers.map(streamer => {
       return fetchStream(streamer._id).then(res => {
-        const stream = res.data;
-        return Object.assign({}, streamer, stream);
+        const stream = res.data.stream;
+        if (stream) {
+          const { game, viewers, preview: { medium }, channel: { url } } = stream;
+          const streamData = {
+            game,
+            viewers,
+            mediumPreview: medium,
+            url,
+            status: "online"
+          };
+          return Object.assign({}, streamer, streamData);
+        } else {
+          return Object.assign({}, streamer, { status: "offline" });
+        }
       });
     });
   });
