@@ -1,1 +1,28 @@
+.stream {
+    position: relative;
+}
 
+.stream__status {
+    position: absolute;
+    top: 10px;
+    right: 2px;
+}
+
+.stream__status-icon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.online {
+    background: #13ab13;
+    box-shadow: inset 0px 1px 2px 0px #71cf8b;
+    box-shadow: 0px 1px 2px 0px black;
+}
+
+.offline {
+    background-color: #BDBDBD;
+    box-shadow: 0px 1px 1px 0px black;
+}
