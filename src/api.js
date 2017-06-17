@@ -1,5 +1,4 @@
 import axios from "axios";
-import Noty from "noty";
 
 const ID = "a8toalazbnt8nau1t9lirm3m6pe2lz";
 
@@ -16,32 +15,48 @@ var streamers = [
 ];
 var endpoint = "https://api.twitch.tv/kraken";
 
-export function getUsersData() {
-  return axios.get(endpoint + `/users?login=${streamers.join(",")}`, {
-    headers: {
-      Accept: "application/vnd.twitchtv.v5+json",
-      "Client-ID": ID
-    }
+/**
+ * Append each stream (if available) to streamer
+ * returns Array of Promises
+ */
+export function fetchData() {
+  return fetchStreamers().then(res => {
+    const streamers = res.data.users;
+    return streamers.map(streamer => {
+      return fetchStream(streamer._id).then(res => {
+        const stream = res.data;
+        return Object.assign({}, streamer, stream);
+      });
+    });
   });
-  // return new Promise(resolve => resolve(usersDummy))
-}
-export function getUserStream(id) {
-  return axios.get(endpoint + `/streams/${id}`, {
-    headers: {
-      Accept: "application/vnd.twitchtv.v5+json",
-      "Client-ID": ID
-    }
-  });
-}
-function notify(text) {
-  new Noty({
-    timeout: 1000,
-    text,
-    type: "info"
-  }).show();
 }
 
-const usersDummy = {
+/**
+ * Fetch Array of streamers from their names
+ */
+function fetchStreamers() {
+  // return axios.get(endpoint + `/users?login=${streamers.join(",")}`, {
+  //   headers: {
+  //     Accept: "application/vnd.twitchtv.v5+json",
+  //     "Client-ID": ID
+  //   }
+  // });
+  return new Promise(resolve => resolve(streamersDummyData));
+}
+
+/**
+ * Fetch individual Stream by user Id
+ */
+function fetchStream(streamerId) {
+  return axios.get(endpoint + `/streams/${streamerId}`, {
+    headers: {
+      Accept: "application/vnd.twitchtv.v5+json",
+      "Client-ID": ID
+    }
+  });
+}
+
+const streamersDummyData = {
   data: {
     _total: 9,
     users: [

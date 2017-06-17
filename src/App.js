@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Users from "./components/users";
-import { getUsersData, getUserStream } from "./api";
+import { fetchData } from "./api";
 
 import "noty/lib/noty.css";
 import "bulma/css/bulma.css";
@@ -16,18 +16,14 @@ class App extends Component {
   }
   componentDidMount() {
     this.setState({ loading: true });
-    getUsersData().then(res => {
-      const newUsers = [];
-      return res.data.users.map(user => {
-        let newUserData = {};
-        return getUserStream(user._id).then(res => {
-          newUserData = Object.assign({}, user, res.data);
-          newUsers.push(newUserData);
-          this.setState({ usersData: newUsers, loading: false });
-        });
+    fetchData().then(res => {
+      Promise.all([...res]).then(res => {
+        this.setState({ usersData: res });
       });
     });
-    // getStreams().then(result => console.log(result.data));
+
+    // TODO: Abstract Api calls with Promise.all ?
+    // setting state every time is dumb
   }
 
   render() {
