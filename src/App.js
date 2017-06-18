@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Streamers from "./components/Streamers";
+import Header from "./components/Header";
 import { fetchData } from "./api";
 
 import "bulma/css/bulma.css";
@@ -10,7 +11,8 @@ class App extends Component {
     super(props);
     this.state = {
       streamsData: [],
-      loading: false
+      loading: false,
+      filter: "all"
     };
   }
   componentDidMount() {
@@ -24,12 +26,21 @@ class App extends Component {
     // TODO: Abstract Api calls with Promise.all ?
     // setting state every time is dumb
   }
-
+  filterData(filter) {
+    this.setState({ filter });
+  }
   render() {
     console.log(this.state);
     return (
       <div className="App">
-        <Streamers streamers={this.state.streamsData} />
+        <div className="container ">
+          <div className="columns" style={{ paddingTop: "40px" }}>
+            <div className="column is-offset-2 is-6">
+              <Header filterData={this.filterData.bind(this)} />
+              <Streamers {...this.state} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
