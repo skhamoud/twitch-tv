@@ -22,15 +22,15 @@ class App extends Component {
         this.setState({ streamsData: res });
       });
     });
-
-    // TODO: Abstract Api calls with Promise.all ?
-    // setting state every time is dumb
   }
   filterData(filter) {
     this.setState({ filter });
   }
   render() {
-    console.log(this.state);
+    console.log(
+      "streaming : ",
+      this.state.streamsData.filter(s => s.status === "online")
+    );
     return (
       <div className="App">
         <div className="container ">

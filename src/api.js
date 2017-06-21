@@ -13,7 +13,9 @@ var streamers = [
   "OgamingSC2",
   "brunofin",
   "tommey",
-  "comster404"
+  "caliscg",
+  "lolrenaynay",
+  "inceptionxx"
 ];
 var endpoint = "https://api.twitch.tv/kraken";
 
@@ -28,13 +30,21 @@ export function fetchData() {
       return fetchStream(streamer._id).then(res => {
         const stream = res.data.stream;
         if (stream) {
-          const { game, viewers, preview: { medium }, channel: { url } } = stream;
+          const {
+            game,
+            viewers,
+            preview: { medium },
+            channel: { url, status, followers, language }
+          } = stream;
           const streamData = {
             game,
             viewers,
             mediumPreview: medium,
             url,
-            status: "online"
+            status: "online",
+            currentStatus: status,
+            followers,
+            language
           };
           return Object.assign({}, streamer, streamData);
         } else {
