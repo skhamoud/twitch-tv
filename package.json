@@ -6,7 +6,8 @@
     "axios": "^0.16.2",
     "bulma": "^0.4.2",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-transition-group": "^1.2.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
