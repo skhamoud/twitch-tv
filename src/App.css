@@ -14,7 +14,7 @@
 .stream__status {
     position: absolute;
     top: 10px;
-    right: 2px;
+    right: 15px;
 }
 
 .stream__status-icon {
@@ -41,13 +41,13 @@
 
 .live-stream-enter {
     opacity: 0.01;
-    max-height: 0px;
+    transform: translateY(-100%);
 }
 
 .live-stream-enter.live-stream-enter-active {
     opacity: 1;
-    max-height: 400px;
-    transition: max-height .5s, opacity .4s .2s;
+    transform: translateY(0);
+    transition: transform .5s, opacity .2s .2s;
 }
 
 .live-stream-leave {
@@ -57,6 +57,6 @@
 
 .live-stream-leave.live-stream-leave-active {
     opacity: 0.01;
-    max-height: 0px;
-    transition: max-height .3s .1s, opacity .5s;
+    max-height: 0;
+    transition: max-height .3s .2s, opacity .4s;
 }

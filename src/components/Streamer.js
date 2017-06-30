@@ -49,7 +49,7 @@ export default class Streamer extends React.Component {
             <CSSTransitionGroup
               transitionName="live-stream"
               transitionEnterTimeout={500}
-              transitionLeaveTimeout={600}
+              transitionLeaveTimeout={500}
             >
               {online && this.state.showDetails
                 ? <div className="stream__info">
