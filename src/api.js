@@ -41,12 +41,11 @@ export function fetchData() {
             viewers,
             mediumPreview: medium,
             url,
-            status: "online",
             currentStatus: status,
             followers,
             language
           };
-          return Object.assign({}, streamer, streamData);
+          return Object.assign({}, streamer, { status: "online" }, streamData);
         } else {
           return Object.assign({}, streamer, { status: "offline" });
         }
@@ -77,4 +76,21 @@ function fetchStream(streamerId) {
       "Client-ID": ID
     }
   });
+}
+
+/**
+ * Fetch data from Localstorage 
+ */
+export function getStoredData(delay = 0) {
+  const storedData = window.localStorage.getItem("storedData");
+  return new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      if (storedData) resolve(JSON.parse(storedData));
+      else reject("There is no stored data yet!");
+    }, delay);
+  });
+}
+export function storeData(data) {
+  window.localStorage.removeItem("storedData");
+  window.localStorage.setItem("storedData", JSON.stringify(data, null, 1));
 }
