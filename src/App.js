@@ -70,12 +70,6 @@ class App extends Component {
             this.setState({ error: err, loading: false });
           });
       });
-    // console.log(
-    //   "streaming : \n",
-    //   this.state.streamsData.filter(s => s.status === "online"),
-    //   "\nAll",
-    //   this.state.streamsData
-    // );
   }
 }
 
